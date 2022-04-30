@@ -1,7 +1,6 @@
 from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt 
-import time
 import pandas as pd
 import math
 
@@ -11,7 +10,7 @@ def cutBruteForce(n, p):
     #creates all possible cuts
     #print(n)
     maxp = 0
-    timeA = datetime.now()
+    
     steps = 0
     num = int(math.pow(2, (n-1)))
     for i in range(num):
@@ -42,8 +41,8 @@ def cutBruteForce(n, p):
             maxp = locp
             maxcuts = binaryArr
         
-    time = datetime.now() - timeA
-    return maxp, steps, time.microseconds
+    
+    return maxp, steps
             
         
 
@@ -52,7 +51,7 @@ def cutBottomUp(n, p):
     r = [0] * (n + 1)
     
     steps = 0
-    timeA = datetime.now()
+    
     #print(r)
     maxp = 0
     for j in range(1, n + 1):
@@ -62,10 +61,10 @@ def cutBottomUp(n, p):
             maxp = max(maxp, p[i] + r[j - i - 1])
         r[j] = maxp
 
-    time = datetime.now() - timeA
+    
     maxp = r[n]
     #print(r[n])
-    return r[n], steps, time.microseconds
+    return r[n], steps
 
     
 #print(cutBottomUp(4, [1,4,6,5,6,7,99]))
@@ -87,14 +86,10 @@ for i in range(1, n[-1]):
 Alg1_Steps = np.zeros(size)
 Alg2_Steps = np.zeros(size)
 
-Alg1_Time = np.zeros(size)
-Alg2_Time = np.zeros(size) 
 
 Alg1_StepRatio = np.zeros(size)
 Alg2_StepRatio = np.zeros(size)
 
-Alg1_TimeRatio = np.zeros(size)
-Alg2_TimeRatio = np.zeros(size)
 
 TheoreticalAlg1 = np.zeros(size)
 TheoreticalAlg2 = np.zeros(size)
@@ -115,13 +110,13 @@ for k in range(m):
         #print(tup)
         profit[j] += tup1[0]
         Alg1_Steps[j] += tup1[1]
-        Alg1_Time += tup1[2]
+        
 
         #profit[j], Alg1_Steps[j], Alg1_Time[j] += cutBruteForce(n[j], p)
         tup2 = cutBottomUp(n[j], p)
         profit2[j] += tup2[0]
         Alg2_Steps[j] += tup2[1]
-        Alg2_Time += tup2[2]
+        
         #print(profit, Alg1_Steps[j], Alg1_Time[j])
 
 
@@ -135,32 +130,32 @@ for k in range(m):
 
 
 Alg1_Steps = Alg1_Steps/m
-Alg1_Time = Alg1_Time/m
+
 
 Alg2_Steps = Alg2_Steps/m
-Alg2_Time = Alg2_Time/m
+
 
 Alg1_StepRatio = Alg1_Steps/TheoreticalAlg1
-Alg1_TimeRatio = Alg1_Time/TheoreticalAlg1
+
 
 
 
 Alg2_StepRatio = Alg2_Steps/TheoreticalAlg2
-Alg2_TimeRatio = Alg2_Time/TheoreticalAlg2
+
 
 
 
 Alg1Cstep = max(Alg1_StepRatio)
-Alg1Ctime = max(Alg1_TimeRatio)
+
 
 Alg2Cstep = max(Alg2_StepRatio)
-Alg2Ctime = max(Alg2_TimeRatio)
+
 
 PredictedRT_Alg1_Step = Alg1Cstep * TheoreticalAlg1
-PredictedRT_Alg1_time = Alg1Ctime * TheoreticalAlg1
+
 
 PredictedRT_Alg2_Step = Alg2Cstep * TheoreticalAlg2
-PredictedRT_Alg2_time = Alg2Ctime * TheoreticalAlg2
+
 
 
 Alg1data = {'n':n, 'Theoretical Complexity n * n^2':TheoreticalAlg1, 'Empirical RT steps': Alg1_Steps,
@@ -180,12 +175,6 @@ plt.ylabel("RunTime in Steps")
 plt.legend()
 plt.show()
 
-plt.plot(n, Alg1_Time, label="EmpiricalRT Brute Force")
-plt.plot(n, PredictedRT_Alg1_time, label="PredictedRT Brute Force")
-plt.xlabel("n values")
-plt.ylabel("RunTime in Time(ms)")
-plt.legend()
-plt.show()
 
 
 
@@ -196,12 +185,7 @@ plt.ylabel("RunTime in Steps")
 plt.legend()
 plt.show()
 
-plt.plot(n, Alg2_Time, label="EmpiricalRT DP Bottom Up")
-plt.plot(n, PredictedRT_Alg2_time, label="PredictedRT DP Bottom Up")
-plt.xlabel("n values")
-plt.ylabel("RunTime in Time(ms)")
-plt.legend()
-plt.show()
+
 
 
 
@@ -213,12 +197,6 @@ plt.ylabel("RunTime in Steps")
 plt.legend()
 plt.show()
 
-plt.plot(n, Alg1_Time, label="EpriricalRT Brute Force")
-plt.plot(n, Alg2_Time, label="EmpiricalRT DP Bottom-Up")
-plt.xlabel("n values")
-plt.ylabel("RunTime in Time(ms)")
-plt.legend()
-plt.show()
 
 
 
