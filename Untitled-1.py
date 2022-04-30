@@ -6,6 +6,7 @@ import pandas as pd
 import math
 
 
+
 def cutBruteForce(n, p):
     #creates all possible cuts
     #print(n)
@@ -22,7 +23,7 @@ def cutBruteForce(n, p):
         locp = 0
         for j in range(len(binaryArr)):
             steps += 1
-            print(steps, " of {:e}".format(2**(n-1)*n))
+            print(steps, " of {:e}".format(num))
             
             length2 += 1
             #print(locp)
@@ -168,8 +169,8 @@ Alg1data = {'n':n, 'Theoretical Complexity n * n^2':TheoreticalAlg1, 'Empirical 
 Alg2data = {'n':n, 'Theoretical Complexity n^2':TheoreticalAlg2, 'Empirical RT steps': Alg2_Steps,
 'Ratio = (Emperical RT)/(Theoretical Complexity)': Alg2_StepRatio, 'predicted RT': PredictedRT_Alg2_Step}
 
-#print(Alg1data)
-
+Alg1data.style
+Alg2data.style 
 
 
 plt.plot(n, Alg1_Steps, label="EmpiricalRT Brute Force")
